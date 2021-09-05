@@ -9,6 +9,8 @@ func create_1()  {
 	var par2 = "字符串"
 	var par3 int
 	var par4 float32 = 10.1
+	//默认为float64类型
+	var par4_1 = 10.1
 	var par5 bool
 
 	fmt.Println("1.使用var声明,var <name> <type>")
@@ -16,6 +18,7 @@ func create_1()  {
 	fmt.Println(par2)
 	fmt.Println(par3)
 	fmt.Println(par4)
+	fmt.Println(par4_1)
 	fmt.Println(par5)
 }
 
