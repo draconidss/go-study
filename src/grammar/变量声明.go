@@ -55,6 +55,7 @@ func create_4() {
 
 	fmt.Println("4.声明和初始化多个变量")
 	fmt.Println(par10)
+
 	fmt.Println(par11)
 
 }
