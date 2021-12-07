@@ -2,9 +2,8 @@ package main
 
 import "fmt"
 
-
 //1.使用var声明,var <name> <type>
-func create_1()  {
+func create_1() {
 	var par1 string
 	var par2 = "字符串"
 	var par3 int
@@ -22,9 +21,8 @@ func create_1()  {
 	fmt.Println(par5)
 }
 
-
 //2.多个变量一起声明
-func create_2()  {
+func create_2() {
 	var (
 		par6 int
 		par7 float64
@@ -37,18 +35,15 @@ func create_2()  {
 	fmt.Println(par8)
 }
 
-
 //3.使用 := 来显示初始化，只能在函数内部
-func create_3()  {
+func create_3() {
 	par9 := ":=初始化"
 	fmt.Println("3.使用 := 来显示初始化，只能在函数内部")
 	fmt.Println(par9)
 }
 
-
 //4.声明和初始化多个变量
-func create_4()  {
-
+func create_4() {
 
 	var (
 		par10 float32
@@ -61,11 +56,11 @@ func create_4()  {
 	fmt.Println("4.声明和初始化多个变量")
 	fmt.Println(par10)
 	fmt.Println(par11)
+
 }
 
-
 //5.使用表达式 new(Type) 将创建一个Type类型的匿名变量，初始化为Type类型的零值，然后返回变量地址，返回的指针类型为*Type。
-func create_5()  {
+func create_5() {
 
 	//这里返回的是内存地址值,返回的是
 	par12 := new(int)
@@ -74,8 +69,8 @@ func create_5()  {
 	fmt.Println(par12)
 	fmt.Println(*par12)
 	fmt.Println(&par12)
-}
 
+}
 
 func main() {
 	create_1()
