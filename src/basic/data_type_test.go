@@ -90,3 +90,8 @@ func TestString(t *testing.T) {
 	//utf-8中，英文占1个字节。中文占3个字节
 	fmt.Println("占用字节: ", len(mystr01))
 }
+
+func TestBool(t *testing.T) {
+	var flag bool = true
+	fmt.Println(flag)
+}

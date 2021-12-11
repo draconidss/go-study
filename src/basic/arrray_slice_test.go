@@ -66,8 +66,9 @@ func TestSlice(t *testing.T) {
 
 }
 
-func sliceMethod() {
+func TestSliceMethod(t *testing.T) {
 	myarr := []int{100}
+	fmt.Println(myarr)
 	// 追加一个元素
 	myarr = append(myarr, 2)
 	// 追加多个元素
@@ -81,15 +82,13 @@ func sliceMethod() {
 	fmt.Println(myarr)
 }
 
-func main() {
+func TestSlice_2(t *testing.T) {
+	var numbers4 = [...]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	myslice := numbers4[4:6:8]
+	fmt.Println(myslice)
+	fmt.Println(cap(myslice))
 
-	/*	arr01 := [...]int{1, 2, 3}
-		arr02 := [...]int{1, 2, 3, 4}
-		fmt.Printf("%d 的类型是: %T\n", arr01, arr01)
-		fmt.Printf("%d 的类型是: %T", arr02, arr02)
-
-		fmt.Println()
-		create2()
-		sliceCreate()*/
-	sliceMethod()
+	myslice = myslice[:cap(myslice)]
+	fmt.Println(myslice)
+	fmt.Printf("myslice的第四个元素为: %d", myslice[3])
 }
