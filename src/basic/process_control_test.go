@@ -191,3 +191,43 @@ func TestMultiDefer(t *testing.T) {
 	name = "java"
 	fmt.Println(name)
 }
+
+//defer在return后调用
+//结果
+//myfunc 函数里的name：go
+//main 函数里的name: python
+//main 函数里的myname:  go
+var name string = "go"
+
+func myfunc() string {
+	defer func() {
+		name = "python"
+	}()
+
+	fmt.Printf("myfunc 函数里的name：%s\n", name)
+	return name
+}
+
+func main() {
+	myName := myfunc()
+	fmt.Printf("main 函数里的name: %s\n", name)
+	fmt.Println("main 函数里的myname: ", myName)
+}
+
+//TODO:select-case
+//跟 switch-case 相比，select-case 用法比较单一，它仅能用于 信道/通道 的相关操作。
+func TestSelectCase(t *testing.T) {
+	c1 := make(chan string, 1)
+	c2 := make(chan string, 1)
+
+	c2 <- "hello"
+
+	select {
+	case msg1 := <-c1:
+		fmt.Println("c1 received: ", msg1)
+	case msg2 := <-c2:
+		fmt.Println("c2 received: ", msg2)
+	default:
+		fmt.Println("No data received.")
+	}
+}
