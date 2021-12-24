@@ -124,26 +124,48 @@ func TestReflectField(t *testing.T) {
 		fmt.Printf("第 %d 个字段：%v \n", i+1, value.Field(i))
 	}
 }
-func (r Reflect) SayBye() {
-	fmt.Println("Bye")
+
+func (r Reflect) SayBye() string {
+	return "Bye"
 }
 
-func (r Reflect) SayHello() {
-	fmt.Println("Hello")
+func (r Reflect) SayHello() string {
+	return "Hello"
 }
 
+func (r Reflect) SelfIntroduction(name string, age int) string {
+	return "Hello, my name is " + name + "and im " + string(rune(age)) + "years old."
+}
+
+//对方法的操作
+//对方法本身用TypeOf
+//动态调用方法用ValueOf
 func TestReflectMethod(t *testing.T) {
 	p := Reflect{name: "Draco", age: 18}
 
-	parmType := reflect.TypeOf(p)
+	parmType := reflect.TypeOf(&p)
+	parmValue := reflect.ValueOf(&p)
 
-	fmt.Println("方法数（可导出的）:", t.NumMethod())
-	fmt.Println("第 1 个方法：", t.Method(0).Name)
-	fmt.Println("第 2 个方法：", t.Method(1).Name)
-
+	fmt.Println("方法数（可导出的）:", parmType.NumMethod())
+	fmt.Println("第 1 个方法：", parmType.Method(0).Name)
+	fmt.Println("第 2 个方法：", parmType.Method(1).Name)
 	fmt.Println("==========================")
 	// 也可以这样来遍历
-	for i := 0; i < t.NumMethod(); i++ {
-		fmt.Printf("第 %d 个方法：%v \n", i+1, t.Method(i).Name)
+	for i := 0; i < parmType.NumMethod()-1; i++ {
+		fmt.Printf("调用第 %d 个方法：%v ，调用结果：%v\n",
+			i+1,
+			parmType.Method(i).Name,
+			parmValue.MethodByName(parmType.Method(i).Name).Call(nil))
 	}
+
+	//调用有参函数
+	fmt.Println("==========================")
+	input := make([]reflect.Value, 2)
+	input[0] = reflect.ValueOf("Colin")
+	input[1] = reflect.ValueOf(54)
+	result := parmValue.MethodByName("SelfIntroduction").Call(input)
+	fmt.Println(result)
+	fmt.Println(result[0].Interface())
 }
+
+//动态调用函数（使用索引且无参数）
