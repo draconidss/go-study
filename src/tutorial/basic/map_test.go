@@ -60,7 +60,3 @@ func TestMapMethod(t *testing.T) {
 	}
 
 }
-
-func main() {
-
-}

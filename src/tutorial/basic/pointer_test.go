@@ -20,7 +20,7 @@ func TestCreation(t *testing.T) {
 
 	//第三种
 	aint = 1
-	var _ *int // 声明一个指针
+	var _ *int // 声明一个指针=
 	_ = &aint  // 初始化
 }
 
@@ -37,13 +37,12 @@ func TestType(t *testing.T) {
 	astr := "hello"
 	aint := 1
 	abool := false
-	arune := 'a'
+	//arune := 'a'
 	afloat := 1.2
 
 	fmt.Printf("astr 指针类型是：%T\n", &astr)
 	fmt.Printf("aint 指针类型是：%T\n", &aint)
 	fmt.Printf("abool 指针类型是：%T\n", &abool)
-	fmt.Printf("arune 指针类型是：%T\n", &arune)
 	fmt.Printf("afloat 指针类型是：%T\n", &afloat)
 }
 

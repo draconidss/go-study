@@ -16,12 +16,12 @@ func TestCreate_1(t *testing.T) {
 	var par5 bool
 
 	fmt.Println("1.使用var声明,var <name> <type>")
-	fmt.Println(par1)
-	fmt.Println(par2)
-	fmt.Println(par3)
-	fmt.Println(par4)
-	fmt.Println(par4_1)
-	fmt.Println(par5)
+	fmt.Println(par1)   // ""
+	fmt.Println(par2)   // "字符串"
+	fmt.Println(par3)   // 0
+	fmt.Println(par4)   // 10.1
+	fmt.Println(par4_1) // 10.1
+	fmt.Println(par5)   // false
 }
 
 //2.多个变量一起声明
@@ -33,9 +33,9 @@ func TestCreate_2(t *testing.T) {
 	)
 
 	fmt.Println("2. 多个变量一起声明")
-	fmt.Println(par6)
-	fmt.Println(par7)
-	fmt.Println(par8)
+	fmt.Println(par6) // 0
+	fmt.Println(par7) // 0
+	fmt.Println(par8) // ""
 }
 
 //3.使用 := 来显示初始化，只能在函数内部
@@ -73,5 +73,15 @@ func TestCreate_5(t *testing.T) {
 	fmt.Println(par12)
 	fmt.Println(*par12)
 	fmt.Println(&par12)
+}
 
+//变量的零值
+func TestDefaultValue(t *testing.T) {
+	var (
+		i int
+		f float32
+		b bool
+		s string
+	)
+	fmt.Printf("%v %v %v %q", i, f, b, s)
 }

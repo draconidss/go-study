@@ -19,7 +19,7 @@ func TestReflectThreeRules(t *testing.T) {
 	fmt.Printf("从接口变量到反射对象：Type对象的类型为 %T \n", parmType)   //*reflect.rtype
 	fmt.Printf("从接口变量到反射对象：Value对象的类型为 %T \n", parmValue) //reflect.Value
 
-	//第二定律：反射可以将 “反射类型对象”转换为 接口类型变量；
+	//第二定律：反射可以将 “反射类型对象”转换为接口类型变量；
 	//最后转换后的对象，静态类型为 interface{} ，如果要转成最初的原始类型，需要再类型断言转换一下
 	fmt.Println("第二定律：反射可以将 “反射类型对象”转换为 接口类型变量；")
 	i := parmValue.Interface()
