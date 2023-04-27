@@ -1,12 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"strings"
 	"testing"
 	"unsafe"
 )
 
-//整型
+// 整型
 func TestInteger(t *testing.T) {
 	var (
 	/*		i1 int
@@ -37,7 +39,7 @@ func TestInteger(t *testing.T) {
 
 }
 
-//浮点型
+// 浮点型
 func TestFloat(t *testing.T) {
 	var myfloat01 float32 = 100000182
 	var myfloat02 float32 = 100000187
@@ -78,7 +80,7 @@ func TestRune(t *testing.T) {
 
 func TestString(t *testing.T) {
 	var mystr01 string = "hello,中国"
-	//本质上string是一个字符数组
+	//本质上string是一个 byte 数组
 	var mystr02 [5]byte = [5]byte{104, 101, 108, 108, 111}
 	var myStr03 string = `\n\r`
 	fmt.Println()
@@ -87,8 +89,44 @@ func TestString(t *testing.T) {
 	fmt.Printf("mystr02: %s\n", mystr02)
 	fmt.Printf("mystr03: %s\n", myStr03)
 	fmt.Printf("还原的mystr03: %q\n", myStr03)
-	//utf-8中，英文占1个字节。中文占3个字节
+	//utf-8中，英文占1个byte。中文占3个byte
 	fmt.Println("占用字节: ", len(mystr01))
+
+	//字符串拼接
+	var mystr04 strings.Builder
+	for i := 0; i < 10; i++ {
+		mystr04.WriteString(`a`)
+	}
+	fmt.Println("拼接后的字符串: ", mystr04.String()) // 拼接后的字符串:  aaaaaaaaaa
+
+}
+
+// 字符串拼接，性能比较：strings.Join ≈ strings.Builder > bytes.Buffer > "+" > fmt.Sprintf
+func TestStringJoin(t *testing.T) {
+	a := []string{"a", "b", "c"}
+	//方式1：+
+	ret1 := a[0] + a[1] + a[2]
+	fmt.Println("ret1:", ret1)
+	//方式2：fmt.Sprintf
+	ret2 := fmt.Sprintf("%s%s%s", a[0], a[1], a[2])
+	fmt.Println("ret2:", ret2)
+	//方式3：strings.Builder
+	var sb strings.Builder
+	sb.WriteString(a[0])
+	sb.WriteString(a[1])
+	sb.WriteString(a[2])
+	ret3 := sb.String()
+	fmt.Println("ret3:", ret3)
+	//方式4：bytes.Buffer
+	buf := new(bytes.Buffer)
+	buf.Write([]byte(a[0]))
+	buf.Write([]byte(a[1]))
+	buf.Write([]byte(a[2]))
+	ret4 := buf.String()
+	fmt.Println("ret4:", ret4)
+	//方式5：strings.Join
+	ret5 := strings.Join(a, "")
+	fmt.Println("ret5:", ret5)
 }
 
 func TestBool(t *testing.T) {

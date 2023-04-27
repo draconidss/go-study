@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-//定义结构体
+// 定义结构体
 type Profile struct {
 	name   string
 	age    int
@@ -19,7 +19,7 @@ type company struct {
 	companyAddr string
 }
 
-//将company的属性组合进来
+// 将company的属性组合进来
 type staff struct {
 	company
 	name     string
@@ -60,14 +60,14 @@ func TestDeclare(t *testing.T) {
 //当方法的首字母为大写时，这个方法对于所有包都是Public，其他包可以随意调用
 //当方法的首字母为小写时，这个方法是Private，其他包是无法访问的。
 
-//结构体定义方法：以值做为方法接收者
+// 结构体定义方法：以值做为方法接收者
 func (person Profile) fmtProfile() {
 	fmt.Printf("名字：%s\n", person.name)
 	fmt.Printf("年龄：%d\n", person.age)
 	fmt.Printf("性别：%s\n", person.gender)
 }
 
-//结构体定义方法：修改实例要用指针接收，建议统一使用这个
+// 结构体定义方法：修改实例要用指针接收，建议统一使用这个
 func (person *Profile) changeProfile() {
 	person.name = "小红"
 	person.age = 20
@@ -81,7 +81,7 @@ func TestMethodAllocate(t *testing.T) {
 	myself.fmtProfile()
 }
 
-//测试结构体继承
+// 测试结构体继承
 func TestExtend(t *testing.T) {
 	myCom := company{
 		companyName: "Tencent",
@@ -97,4 +97,21 @@ func TestExtend(t *testing.T) {
 
 	fmt.Printf("%s 在 %s 工作\n", staffInfo.name, staffInfo.companyName)
 	fmt.Printf("%s 在 %s 工作\n", staffInfo.name, staffInfo.company.companyName)
+}
+
+func TestPrintStructByFMT(t *testing.T) {
+	xm := Profile{
+		name:   "小明",
+		age:    18,
+		gender: "male",
+	}
+
+	//%v	值的默认格式表示
+	fmt.Printf("%v\n", xm) // {小明 18 male <nil> <nil>}
+
+	//%+v	类似 %v，但输出结构体时会添加字段名
+	fmt.Printf("%+v\n", xm) // {name:小明 age:18 gender:male mother:<nil> father:<nil>}
+
+	//%#v	值的 Go 语法表示
+	fmt.Printf("%#v\n", xm) //object.Profile{name:"小明", age:18, gender:"male", mother:(*object.Profile)(nil), father:(*object.Profile)(nil)}
 }

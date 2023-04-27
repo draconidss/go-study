@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-//--------------------------------------标签tag------------------------------------------
-//字段上还可以额外再加一个属性，用反引号（Esc键下面的那个键）包含的字符串，称之为 Tag，也就是标签。
+// --------------------------------------标签tag------------------------------------------
+// 字段上还可以额外再加一个属性，用反引号（Esc键下面的那个键）包含的字符串，称之为 Tag，也就是标签。
 type Person struct {
 	Name string `json:"name" label:"Name is: "`
 	//只要发现被omitempty标记的属性 为 false， 0， 空指针，空接口，空数组，空切片，空映射，空字符串中的一种，就会被忽略。
@@ -58,12 +58,19 @@ func TestGetTagByReflect(t *testing.T) {
 	field_1, _ := reflect.TypeOf(p1).FieldByName("Age")
 	//field_2 := reflect.ValueOf(p1).Type().Field(0)         // i 表示第几个字段
 	//field_3 := reflect.ValueOf(&p1).Elem().Type().Field(1) // i 表示第几个字段
-
 	tag := field_1.Tag
 	fmt.Println(tag)
 
+	// 打印所有字段的 tag
+	fmt.Println("打印所有字段的 tag")
+	ts := reflect.TypeOf(Person{})
+	for i := 0; i < ts.NumField(); i++ {
+		f := ts.Field(i)
+		fmt.Println(f.Tag)
+	}
+
 	// 获取键值对
-	//Get是对Lookup的封装
+	//Get 是对 Lookup 的封装
 	labelValue := tag.Get("json")
 	labelValue_1, _ := tag.Lookup("json")
 
@@ -99,10 +106,10 @@ func Print(obj interface{}) error {
 	return nil
 }
 
-//通过tag操作实现打印：
-//Name is: MING
-//Age is: 29
-//Gender is: unknown
+// 通过tag操作实现打印：
+// Name is: MING
+// Age is: 29
+// Gender is: unknown
 func TestPrint(t *testing.T) {
 	p1 := Person{
 		Name: "Jack",

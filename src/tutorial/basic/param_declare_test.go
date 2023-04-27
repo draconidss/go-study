@@ -5,7 +5,9 @@ import (
 	"testing"
 )
 
-//1.使用var声明,var <name> <type>
+//ref: https://golang.iswbm.com/c01/c01_02.html
+
+// 1.使用var声明,var <name> <type>
 func TestCreate_1(t *testing.T) {
 	var par1 string
 	var par2 = "字符串"
@@ -24,7 +26,7 @@ func TestCreate_1(t *testing.T) {
 	fmt.Println(par5)   // false
 }
 
-//2.多个变量一起声明
+// 2.多个变量一起声明
 func TestCreate_2(t *testing.T) {
 	var (
 		par6 int
@@ -38,15 +40,15 @@ func TestCreate_2(t *testing.T) {
 	fmt.Println(par8) // ""
 }
 
-//3.使用 := 来显示初始化，只能在函数内部
+// 3.使用 := 简短声明来显示初始化，只能在函数内部
 func TestCreate_3(t *testing.T) {
 	par9 := ":=初始化"
 	fmt.Println("3.使用 := 来显示初始化，只能在函数内部")
 	fmt.Println(par9)
 }
 
-//4.声明和初始化多个变量
-func TestCreate_4(t *testing.T) {
+// 4.声明和初始化多个变量
+func TestCreate_Multiple(t *testing.T) {
 
 	var (
 		par10 float32
@@ -63,10 +65,11 @@ func TestCreate_4(t *testing.T) {
 
 }
 
-//5.使用表达式 new(Type) 将创建一个Type类型的匿名变量，初始化为Type类型的零值，然后返回变量地址，返回的指针类型为*Type。
-func TestCreate_5(t *testing.T) {
+// 5.使用表达式 new(Type) 将创建一个Type类型的匿名变量，初始化为Type类型的零值，然后返回变量地址，返回的指针类型为*Type。
+func TestCreate_New(t *testing.T) {
 
-	//这里返回的是内存地址值,返回的是
+	//表达式new(T)将创建一个T类型的匿名变量，初始化为T类型的零值
+	//然后返回变量地址，返回的指针类型为*T
 	par12 := new(int)
 
 	fmt.Println("通过new的形式声明变量")
@@ -75,7 +78,7 @@ func TestCreate_5(t *testing.T) {
 	fmt.Println(&par12)
 }
 
-//变量的零值
+// 变量的零值
 func TestDefaultValue(t *testing.T) {
 	var (
 		i int
@@ -83,5 +86,6 @@ func TestDefaultValue(t *testing.T) {
 		b bool
 		s string
 	)
+	// 0 0 false ""
 	fmt.Printf("%v %v %v %q", i, f, b, s)
 }

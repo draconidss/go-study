@@ -52,10 +52,21 @@ func modifyArrayBySlice(sls []int) {
 func modifyArrayByPtr(arr *[3]int) {
 	(*arr)[1] = 91
 }
-
 func TestArrayAndSlice(t *testing.T) {
 	a := [3]int{89, 90, 91}
 	modifyArrayBySlice(a[:])
 	modifyArrayByPtr(&a)
 	fmt.Println(a)
+}
+
+func incr(p *int) int {
+	a := *p
+	a++ // 非常重要：只是增加p指向的变量的值，并不改变p指针！！！
+	return a
+}
+func TestPointAsArgument(t *testing.T) {
+	v := 1
+	incr(&v)              // side effect: v is now 2
+	fmt.Println(incr(&v)) // "3" (and v is 3)
+	fmt.Println(v)
 }

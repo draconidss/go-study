@@ -28,42 +28,47 @@ func create2() {
 	fmt.Println(myarr[0:3])
 }
 
-//切片
-func TestSlice(t *testing.T) {
+// 切片构造方式
+func TestSliceCreation(t *testing.T) {
 
-	//第一种方式
+	//切片表达式：从字符串、数组、指向数组或切片的指针（即从切片再构造）中构造子字符串或切片
 	myarr := [5]int{1, 2, 3, 4, 5}
-	fmt.Println()
-	fmt.Printf("myarr 的长度为：%d，容量为：%d\n", len(myarr), cap(myarr))
-
+	fmt.Printf("myarr:%v len(s):%v cap(s):%v\n", myarr, len(myarr), cap(myarr))
+	// 指定 low 和 high，不指定 cap 时切片终止索引会一直到原数组的最后一个数，也就是 len - low
 	mysli1 := myarr[1:3]
-	fmt.Printf("mysli1 的长度为：%d，容量为：%d\n", len(mysli1), cap(mysli1))
-	fmt.Println(mysli1)
-
-	mysli2 := myarr[1:3:4]
+	fmt.Printf("mysli1:%v len(s):%v cap(s):%v\n", mysli1, len(mysli1), cap(mysli1)) // mysli1:[2 3] len(s):2 cap(s):4
+	// 指定 low、high 和 cap
+	mysli2 := myarr[1:3:5]
 	fmt.Printf("mysli2 的长度为：%d，容量为：%d\n", len(mysli2), cap(mysli2))
 	fmt.Println(mysli2)
 
-	//第二种方式
-	// 声明字符串切片
+	// 从切片再构造切片，或字符串构造切片
+	println(mysli2[:], "xxx"[:])
+
+	//第二种方式：声明 var name []T
 	var _ []string
-
-	// 声明整型切片
 	var _ []int
-
-	// 声明一个空切片
 	var _ = []int{}
+	var _ = []int{1, 2}
 
-	//第三种方式：使用make
-	//make 函数的格式：make( []Type, size, cap )
+	//第三种方式：使用 make
+	//make 函数的格式：make( []Type, size, cap )，same as make([]T, cap)[:len]，没指定cap则默认为len值
+	mysli3 := make([]int, 2)
+	mysli4 := make([]int, 2, 10)
+	fmt.Println(mysli3, mysli4)
+}
 
-	//没指定cap则默认为len值
-	a := make([]int, 2)
-	b := make([]int, 2, 10)
-	fmt.Println(a, b)
-	fmt.Println(len(a), len(b))
-	fmt.Println(cap(a), cap(b))
+func TestSliceCompare(t *testing.T) {
+	// 切片比较，只能和 nil 比较
+	var sli1 []int
+	fmt.Println(sli1 == nil) // true
 
+	// 判断空切片应该使用 len(s) == 0 来判断，一个nil值的切片的长度和容量都是0。但是我们不能说一个长度和容量都是0的切片一定是nil
+	var (
+		sli2 []int
+		sli3 = []int{}
+	)
+	println(sli2 == nil, sli3 == nil) // true false
 }
 
 func TestSliceMethod(t *testing.T) {
@@ -91,4 +96,24 @@ func TestSlice_2(t *testing.T) {
 	myslice = myslice[:cap(myslice)]
 	fmt.Println(myslice)
 	fmt.Printf("myslice的第四个元素为: %d", myslice[3])
+}
+
+// append 在不扩容情况下是如何修改底层数组
+func TestSliceAppend(t *testing.T) {
+	array := [...]int8{1, 2, 3, 4, 5}
+	sli1 := array[:2]
+	sli2 := array[1:]
+	fmt.Println(sli1) // [1 2]
+	fmt.Println(sli2) // [2 3 4 5]
+	sli1 = append(sli1, 6)
+	fmt.Println(sli1) // [1 2 6]
+	fmt.Println(sli2) // [2 6 4 5]
+}
+
+func TestSliceGrowing118(t *testing.T) {
+	var s []int
+	for i := 0; i < 4098; i++ {
+		s = append(s, i)
+		t.Log(len(s), cap(s))
+	}
 }
