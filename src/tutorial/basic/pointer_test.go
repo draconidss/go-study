@@ -24,6 +24,20 @@ func TestCreation(t *testing.T) {
 	_ = &aint  // 初始化
 }
 
+// 下面两种方式值还未分配内存，需要用 new 或 make
+func TestCreationFail(t *testing.T) {
+	var a *int
+	// new
+	// a = new(int)
+	*a = 100
+	fmt.Println(*a)
+
+	var b map[string]int
+	// b = make(map[string]int)
+	b["沙河娜扎"] = 100
+	fmt.Println(b)
+}
+
 func TestSymbol(t *testing.T) {
 	aint := 1    // 定义普通变量
 	ptr := &aint // 定义指针变量
@@ -56,7 +70,7 @@ func TestArrayAndSlice(t *testing.T) {
 	a := [3]int{89, 90, 91}
 	modifyArrayBySlice(a[:])
 	modifyArrayByPtr(&a)
-	fmt.Println(a)
+	fmt.Println(a) // [90 91 91]
 }
 
 func incr(p *int) int {
@@ -66,7 +80,7 @@ func incr(p *int) int {
 }
 func TestPointAsArgument(t *testing.T) {
 	v := 1
-	incr(&v)              // side effect: v is now 2
-	fmt.Println(incr(&v)) // "3" (and v is 3)
-	fmt.Println(v)
+	incr(&v)
+	fmt.Println(incr(&v)) // 2
+	fmt.Println(v)        // 1
 }
